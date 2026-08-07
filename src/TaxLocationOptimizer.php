@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 namespace Ksfraser\Retirement;
+use Ksfraser\Portfolio\AssetEfficiencyEngine;
+use Ksfraser\Portfolio\DiversificationCalculator;
 
 /**
  * Tax Location Optimizer

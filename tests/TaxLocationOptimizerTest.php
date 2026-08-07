@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ksfraser\Retirement\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Ksfraser\Retirement\TaxLocationOptimizer;
 
 /**
  * Tax Location Optimizer Test Suite
