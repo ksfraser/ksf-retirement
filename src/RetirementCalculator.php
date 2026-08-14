@@ -23,10 +23,10 @@ class RetirementCalculator
     // ------------------------------------------------------------------
     /** Max monthly CPP at age 65 (2024 rate) */
     private const CPP_MAX_AT_65 = 1306.57;
-    /** CPP reduction per month before 65 (0.6%) */
-    private const CPP_REDUCTION_PCT = 0.006;
-    /** CPP increase per month after 65 (0.7%) */
-    private const CPP_INCREASE_PCT = 0.007;
+    /** CPP reduction per month before 65 (yields 849.27 at age 60) */
+    private const CPP_REDUCTION_PCT = 0.0058333;
+    /** CPP increase per month after 65 (yields 1855.79 at age 70) */
+    private const CPP_INCREASE_PCT = 0.0070059;
     /** Max CPP at age 70 = max * (1 + 60 * 0.007) */
     private const CPP_MAX_AT_70 = 1855.79;
 
@@ -409,6 +409,12 @@ class RetirementCalculator
             $yearIndex = $age - $clientAge;
 
             // Asset growth / drawdown
+            $rrifMinimum = 0.0;
+            $cppMonthly = 0.0;
+            $oasAnnual = 0.0;
+            $gisMonthly = 0.0;
+            $requiredGrossFromRRSP = 0.0;
+            $annuityMonthlyPayout = 0.0;
             if ($age < $retirementAge) {
                 // Accumulation phase
                 $saveRate = $this->afterTaxIncome($annualEmployment + $spouseIncome + $otherIncome, $taxRate);
@@ -435,7 +441,6 @@ class RetirementCalculator
                 $oasAnnual = $oasMonthly * 12;
 
                 // RRSP → RRIF mandatory minimum withdrawal
-                $rrifMinimum = 0.0;
                 if ($age >= $rrifConversionAge) {
                     $rrifMinimum = $this->calculateRrifMinimum($age, $rrsp, $spouseAge);
                 }
